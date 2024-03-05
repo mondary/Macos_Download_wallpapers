@@ -13,7 +13,7 @@ extract_image_urls() {
     
     # Parcourir les URLs des images et les ajouter au fichier image_urls.csv
     for image_url in "${image_urls[@]}"; do
-        echo "${image_url}/download" >> Wallpapers/image_urls.csv
+        echo "${image_url}/download" >> Wallpapers/images_futuristic+city.csv
     done
 
     echo "Extraction des URLs d'images de la page $page_number terminée."
@@ -28,7 +28,7 @@ for ((page=2; page<=total_pages; page++)); do
     extract_image_urls $page
 done
 
-echo "Extraction des URLs d'images de toutes les pages terminée. Les URLs sont enregistrées dans Wallpapers/image_urls.csv."
+echo "Extraction des URLs d'images de toutes les pages terminée. Les URLs sont enregistrées dans Wallpapers/images_futuristic+city.csv."
 
 # Fonction pour lister les images à partir des URLs se terminant par "/download" en excluant ceux contenant "thumb", "preview" et "logo.svg"
 list_images_from_url() {
@@ -46,6 +46,11 @@ list_images_from_url() {
 # Lire les URLs se terminant par "/download" à partir du fichier CSV
 while IFS= read -r image_url; do
     list_images_from_url "$image_url"
-done < Wallpapers/image_urls.csv
+done < Wallpapers/images_futuristic+city.csv
 
 echo "Liste des fichiers images obtenue. Les fichiers sont enregistrés dans Wallpapers."
+
+# Renommer le fichier CSV en images_futuristic+city.csv
+mv Wallpapers/images_futuristic+city.csv Wallpapers/images_futuristic+city.csv
+
+echo "Le fichier CSV a été renommé en images_futuristic+city.csv."
