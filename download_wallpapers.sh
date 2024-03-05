@@ -30,13 +30,13 @@ done
 
 echo "Extraction des URLs d'images de toutes les pages terminée. Les URLs sont enregistrées dans Wallpapers/images_futuristic+city.csv."
 
-# Fonction pour lister les images à partir des URLs se terminant par "/download" en excluant ceux contenant "thumb", "preview", "logo.svg" et "anime"
+# Fonction pour lister les images à partir des URLs se terminant par "/download" en excluant ceux contenant "thumb", "preview" et "logo.svg"
 list_images_from_url() {
     local link=$1
     local image_urls=($(curl -s "$link" | grep -o '<img[^>]*src="[^"]*"[^>]*>' | sed -e 's/<img[^>]*src="//g' -e 's/"[^>]*>//g'))
     
     for image_url in "${image_urls[@]}"; do
-        if [[ $image_url != *"-thumb"* && $image_url != *"-preview"* && $image_url != *"logo.svg" && $image_url != *"anime"* ]]; then
+        if [[ $image_url != *"-thumb"* && $image_url != *"-preview"* && $image_url != *"logo.svg" ]]; then
             filename=$(basename "$image_url")
             curl -s "$image_url" -o "Wallpapers/$filename"
         fi
